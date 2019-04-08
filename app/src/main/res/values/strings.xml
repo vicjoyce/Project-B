@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Project-B</string>
+    <string name="login_button">LOG IN</string>
+    <string name="sign_in_button">SIGN UP</string>
+    <string name="login_textview">LOGIN</string>
+    <string name="login_login_button">Login</string>
+    <string name="facebook_app_id">1248453291973458</string>
+    <string name="fb_login_protocol_scheme">fb1248453291973458</string>
+    <string name="submit_subject">Subject</string>
+    <string name="pin_timer_ready_button">READY?</string>
+
+</resources>

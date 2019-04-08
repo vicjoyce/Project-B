@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/allerta_stencil</item>
+        <item>@font/lato_bold</item>
+        <item>@font/lato_thin</item>
+        <item>@font/lobster</item>
+        <item>@font/roboto_bold</item>
+        <item>@font/sree_krushnadevaraya</item>
+        <item>@font/stardos_stencil</item>
+    </array>
+</resources>

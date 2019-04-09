@@ -7,6 +7,7 @@ import android.util.Log
 import com.brianku.project_b.R
 import com.brianku.project_b.app_central.AppCentralActivity
 import com.brianku.project_b.dashboard.DashboardActivity
+import com.brianku.project_b.model.Options
 import com.brianku.project_b.model.Votes
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_pin_code_and_timer.*
@@ -52,18 +53,20 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
             val reference = mDatabase.getReference("/Votes").push()
             if( uid != null && reference.key != null){
                 val vote = Votes(subject,reference.key!!,uid,System.currentTimeMillis() / 1000,pinCode)
+                val optionsForVote = Options(options[0],options[1],options[2],options[3])
                 reference.setValue(vote).addOnSuccessListener {
-                    val userReference = mDatabase.getReference("/Users/$uid")
-                    userReference.child("history").child(reference.key!!).setValue(true).addOnSuccessListener {
-                        val pinReference = mDatabase.getReference("PinCodes/$pinCode")
-                        pinReference.setValue(reference.key!!).addOnSuccessListener {
+                    reference.child("options").setValue(optionsForVote)
+                        .addOnSuccessListener {
+                            val userReference = mDatabase.getReference("/Users/$uid")
+                            userReference.child("history").child(reference.key!!).setValue(true).addOnSuccessListener {
+                                val pinReference = mDatabase.getReference("PinCodes/$pinCode")
+                                pinReference.setValue(reference.key!!).addOnSuccessListener {
 
-                            navigateToAppCentral(reference.key!!)
+                                    navigateToAppCentral(reference.key!!)
+                                }
                         }
                     }
                 }
-            }else{
-                Log.d("vic","unknown issue occurred")
             }
         }
     }

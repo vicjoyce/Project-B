@@ -3,17 +3,17 @@
     <item
         android:id="@+id/vote"
         android:title="Vote"
-        android:icon="@drawable/ic_poll_black_24dp"
+        android:icon="@drawable/vote"
     />
     <item
             android:id="@+id/chat"
             android:title="Chat"
-            android:icon="@drawable/ic_question_answer_black_24dp"
+            android:icon="@drawable/chat"
     />
     <item
             android:id="@+id/result"
             android:title="Result"
-            android:icon="@drawable/ic_trending_up_black_24dp"
+            android:icon="@drawable/chart"
     />
 
 </menu>

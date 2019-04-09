@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.brianku.project_b.R
 import com.brianku.project_b.app_central.AppCentralActivity
 import com.brianku.project_b.dashboard.DashboardActivity
@@ -18,6 +17,7 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
     private lateinit var mDatabase: FirebaseDatabase
     private var pinCode:String = ""
     private var subject:String = ""
+    private lateinit var options:Array<String>
     private var minute:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +33,7 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
 
         subject = intent.getStringExtra("Subject")
         minute = intent.getIntExtra("Minute",3)
+        options = intent.getStringArrayExtra("Options")
 
         initComponents()
     }
@@ -52,27 +53,26 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
             if( uid != null && reference.key != null){
                 val vote = Votes(subject,reference.key!!,uid,System.currentTimeMillis() / 1000,pinCode)
                 reference.setValue(vote).addOnSuccessListener {
-                    startActivity(Intent(this,AppCentralActivity::class.java))
+                    val userReference = mDatabase.getReference("/Users/$uid")
+                    userReference.child("history").child(reference.key!!).setValue(true).addOnSuccessListener {
+                        val pinReference = mDatabase.getReference("PinCodes/$pinCode")
+                        pinReference.setValue(reference.key!!).addOnSuccessListener {
+
+                            navigateToAppCentral(reference.key!!)
+                        }
+                    }
                 }
             }else{
                 Log.d("vic","unknown issue occurred")
             }
-
-
-
-
         }
     }
 
+    private fun navigateToAppCentral(voteId:String){
+        val intent = Intent(this,AppCentralActivity::class.java)
+        intent.putExtra("VoteId",voteId)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 }
-
-
-/*
- Votes(val subject:String = "",
-                 val voteId:String = "",
-                 val ownerId:String = "",
-                 val timestamp: Long = System.currentTimeMillis() / 1000,
-                 val pinCode:String = "",
-                 var options:MutableList<String> = mutableListOf()
-
-*/

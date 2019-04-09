@@ -9,6 +9,7 @@ import com.brianku.project_b.model.DashboardItem
 import com.brianku.project_b.model.User
 import com.brianku.project_b.user_login_and_register.LoginScreenActivity
 import com.brianku.project_b.votes.CreateVoteActivity
+import com.brianku.project_b.votes.HandlePinCodeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,7 +43,7 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this,CreateVoteActivity::class.java))
         }
         dashboard_go_to_vote_btn.setOnClickListener {
-            startActivity(Intent(this,AppCentralActivity::class.java))
+            startActivity(Intent(this,HandlePinCodeActivity::class.java))
         }
     }
 
@@ -68,13 +69,11 @@ class DashboardActivity : AppCompatActivity() {
         currentUser?.let{
             Picasso.get().load(it.image).into(dashboard_BlurImageView,object:Callback{
                 override fun onSuccess() {
-                    dashboard_BlurImageView.setBlur(24)
+                    dashboard_BlurImageView.setBlur(25)
                 }
 
                 override fun onError(e: Exception?) {
-
                 }
-
             })
 
             Picasso.get().load(it.thumbImage).into(dashboard_circleView)

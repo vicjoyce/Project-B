@@ -40,6 +40,7 @@ class SubmitVoteActivity : AppCompatActivity() {
         submit_submit_btn.setOnClickListener {
             val intent = Intent(this,PinCodeAndTimerActivity::class.java)
             intent.putExtra("Subject",subject)
+            intent.putExtra("Options",options)
             intent.putExtra("Minute",minute)
 
             startActivity(intent)

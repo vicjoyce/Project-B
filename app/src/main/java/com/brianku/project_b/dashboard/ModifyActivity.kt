@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.WindowManager
 import android.widget.ProgressBar
@@ -177,8 +178,9 @@ class ModifyActivity : AppCompatActivity() {
     }
 
     private fun setProfileImage(photoUri:Uri){
-        val bitmapSrc = ImageDecoder.createSource(contentResolver,photoUri)
-        val bitmap = ImageDecoder.decodeBitmap(bitmapSrc)
+//        val bitmapSrc = ImageDecoder.createSource(contentResolver,photoUri)
+//        val bitmap = ImageDecoder.decodeBitmap(bitmapSrc)
+        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,photoUri)
         modify_circleimageview_imageview.setImageBitmap(bitmap)
         modify_select_photo_btn.alpha = 0f
     }

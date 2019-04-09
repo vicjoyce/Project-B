@@ -185,7 +185,7 @@ class LoginScreenActivity : AppCompatActivity() {
 
 
     private fun setupViewpager(){
-        val images = arrayListOf<Int>(R.drawable.dummy_1,R.drawable.dummy_2,R.drawable.dummy_3)
+        val images = arrayListOf<Int>(R.drawable.concept_chat2,R.drawable.concept_discuss2,R.drawable.concept_vote2)
 
         listOfTrainPage = mutableListOf(
             TrainPage("Page 1"

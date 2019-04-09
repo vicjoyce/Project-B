@@ -10,9 +10,10 @@ data class User(var displayName:String = "",
                 var email:String = "",
                 var image:String = "default",
                 var thumbImage:String = "default",
-                var history:MutableList<String> = mutableListOf()
+                var history:HashMap<String,Boolean> = hashMapOf<String,Boolean>()
 
 ) : Serializable {
+
     @Exclude
     fun toMap():Map<String,Any?>{
         return mapOf(

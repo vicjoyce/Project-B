@@ -1,11 +1,13 @@
 package com.brianku.project_b.app_central
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.widget.Toast
 import com.brianku.project_b.R
+import com.brianku.project_b.dashboard.DashboardActivity
 import kotlinx.android.synthetic.main.activity_app_central.*
 
 class AppCentralActivity : AppCompatActivity() {
@@ -35,7 +37,16 @@ class AppCentralActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_central)
         bottom_navigation_bar.setOnNavigationItemSelectedListener(mOnNavigationItemListIntent)
-        replaceFragment(VoteFragment())
+        setUpIntentData()
+    }
+
+    private fun setUpIntentData(){
+        val voteId = intent.getStringExtra("VoteId")
+        val arguments = Bundle()
+        arguments.putString("VoteId",voteId)
+        val fragment = VoteFragment()
+        fragment.arguments = arguments
+        replaceFragment(fragment)
     }
 
     private fun replaceFragment(fragment:Fragment){
@@ -43,5 +54,13 @@ class AppCentralActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragmentContainer,fragment)
         fragmentTransaction.commit()
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this,DashboardActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

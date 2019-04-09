@@ -12,7 +12,8 @@ data class Votes(val subject:String = "",
                  val ownerId:String = "",
                  val timestamp: Long = System.currentTimeMillis() / 1000,
                  val pinCode:String = "",
-                 var options:MutableList<String> = mutableListOf()
+                 var options:HashMap<String,Boolean> = hashMapOf<String,Boolean>(),
+                 var results:HashMap<String,Boolean> = hashMapOf<String,Boolean>()
 
 ) : Serializable {
     @Exclude

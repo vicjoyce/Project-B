@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -212,9 +214,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setProfileImage(photoUri:Uri){
-        val bitmapSrc = ImageDecoder.createSource(contentResolver,photoUri)
-        val bitmap = ImageDecoder.decodeBitmap(bitmapSrc)
+//        val bitmapSrc = ImageDecoder.createSource(contentResolver,photoUri)
+//        val bitmap = ImageDecoder.decodeBitmap(bitmapSrc)
+
+        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,photoUri)
+//        val bitmapDrawable = BitmapDrawable(bitmap)
         main_circleimageview_imageview.setImageBitmap(bitmap)
+//        main_circleimageview_imageview.setBackgroundDrawable(bitmapDrawable)
         main_select_photo_btn.alpha = 0f
     }
 

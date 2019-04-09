@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_submit_vote.*
 
 class SubmitVoteActivity : AppCompatActivity() {
 
-    private var minute = 3
+    private var minute:Int = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,16 +27,21 @@ class SubmitVoteActivity : AppCompatActivity() {
         submit_option_d_tv.text = options[3]
 
         submit_number_picker.value = minute
-
+        submit_number_picker.setWrapSelectorWheel(true)
         submit_number_picker.setOnValueChangedListener { _, _, newVal ->
-            minute = newVal
+              if(newVal == 3){
+                  minute = 10
+              }else{
+                  minute = newVal - 1
+              }
+
         }
 
         submit_submit_btn.setOnClickListener {
             val intent = Intent(this,PinCodeAndTimerActivity::class.java)
             intent.putExtra("Subject",subject)
-            intent.putExtra("Options",options)
             intent.putExtra("Minute",minute)
+
             startActivity(intent)
         }
     }

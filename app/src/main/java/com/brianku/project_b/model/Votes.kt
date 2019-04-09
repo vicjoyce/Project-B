@@ -3,13 +3,15 @@ package com.brianku.project_b.model
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
+import java.sql.Timestamp
 import java.util.*
 
 @IgnoreExtraProperties
-data class Votes(var subject:String = "",
+data class Votes(val subject:String = "",
                  val voteId:String = "",
-                 var ownerId:String = "",
-                 var createDate:Date = Calendar.getInstance().time,
+                 val ownerId:String = "",
+                 val timestamp: Long = System.currentTimeMillis() / 1000,
+                 val pinCode:String = "",
                  var options:MutableList<String> = mutableListOf()
 
 ) : Serializable {
@@ -19,7 +21,7 @@ data class Votes(var subject:String = "",
             "subject" to subject,
             "voteId" to voteId,
             "ownerId" to ownerId,
-            "createDate" to createDate,
+            "timestamp" to timestamp,
             "options" to options
         )
     }

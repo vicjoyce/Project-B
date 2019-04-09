@@ -269,6 +269,9 @@
                     app:np_height="200dp"
                     app:np_dividerColor="@color/white"
                     android:layout_weight="1"
+                    app:np_fadingEdgeEnabled="true"
+                    app:np_scrollerEnabled="true"
+
                     app:np_max="10"
                     app:np_min="3"
                     app:np_selectedTextColor="@color/white"

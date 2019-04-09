@@ -16,13 +16,23 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".votes.PinCodeAndTimerActivity" android:screenOrientation="portrait">
+        <activity android:name=".app_central.AppCentralActivity">
         </activity>
-        <activity android:name=".votes.SubmitVoteActivity" android:screenOrientation="portrait">
+        <activity
+                android:name=".votes.PinCodeAndTimerActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".votes.CreateOptionsActivity" android:screenOrientation="portrait">
+        <activity
+                android:name=".votes.SubmitVoteActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".dashboard.OfficialWebSiteActivity" android:screenOrientation="portrait">
+        <activity
+                android:name=".votes.CreateOptionsActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".dashboard.OfficialWebSiteActivity"
+                android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".votes.StartToVoteActivity"

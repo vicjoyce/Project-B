@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.brianku.project_b.R
+import com.brianku.project_b.app_central.AppCentralActivity
 import com.brianku.project_b.model.DashboardItem
 import com.brianku.project_b.model.User
 import com.brianku.project_b.user_login_and_register.LoginScreenActivity
@@ -41,7 +42,7 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this,CreateVoteActivity::class.java))
         }
         dashboard_go_to_vote_btn.setOnClickListener {
-
+            startActivity(Intent(this,AppCentralActivity::class.java))
         }
     }
 

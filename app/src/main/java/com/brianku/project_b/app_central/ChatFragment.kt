@@ -9,7 +9,6 @@ import android.view.ViewGroup
 
 import com.brianku.project_b.R
 
-
 class ChatFragment : Fragment() {
 
     override fun onCreateView(
@@ -19,6 +18,8 @@ class ChatFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat, container, false)
     }
+
+
 
 
 }

@@ -66,6 +66,7 @@
             <TextView
                     android:fontFamily="@font/lato_bold"
                     android:text="D"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +115,7 @@
             <TextView
                     android:fontFamily="@font/lato_bold"
                     android:text="C"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/vote_fragment_option_c_tv"
@@ -164,6 +166,7 @@
             <TextView
                     android:fontFamily="@font/lato_bold"
                     android:text="B"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
@@ -238,6 +241,7 @@
 
             <TextView
                     android:fontFamily="@font/lato_bold"
+                    android:text="0:00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -288,6 +292,7 @@
             <TextView
                     android:fontFamily="@font/lato_bold"
                     android:text="A"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"

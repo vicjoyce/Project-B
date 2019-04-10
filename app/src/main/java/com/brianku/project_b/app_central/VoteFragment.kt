@@ -30,7 +30,7 @@ class VoteFragment() : Fragment() {
         var mVoteId:String? = null
     }
     private lateinit var mDatabase:FirebaseDatabase
-    private lateinit var timer: CountDownTimer
+    private  var timer : CountDownTimer? = null
     private var answer:String = ""
     private lateinit var mParticipant:HashMap<String,Boolean>
     private var hasVoted:Boolean = false
@@ -59,7 +59,9 @@ class VoteFragment() : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        timer.cancel()
+        if(timer != null) {
+            timer?.cancel()
+        }
     }
 
 
@@ -73,8 +75,9 @@ class VoteFragment() : Fragment() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val vote = dataSnapshot.getValue(Votes::class.java)
                     vote?.let{
-                        setupVoteInfo(it)
-
+                        if(vote_fragment_subject_tv != null) {
+                            setupVoteInfo(it)
+                        }
                         mDatabase.getReference("/Users/${it.ownerId}")
                             .addListenerForSingleValueEvent(object : ValueEventListener{
                                 override fun onCancelled(p0: DatabaseError) {}
@@ -82,7 +85,9 @@ class VoteFragment() : Fragment() {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                                     val user = dataSnapshot.getValue(User::class.java)
                                     user?.let{
-                                        Picasso.get().load(it.thumbImage).into(vote_frament_subject_owner_imageview)
+                                        if(vote_frament_subject_owner_imageview != null) {
+                                            Picasso.get().load(it.thumbImage).into(vote_frament_subject_owner_imageview)
+                                        }
                                     }
                                 }
                             })
@@ -168,7 +173,7 @@ class VoteFragment() : Fragment() {
                 vote_fragment_timer_tv.text = "$mins : $seconds"
             }
         }
-        timer.start()
+        timer?.start()
     }
 
     private fun submitAnswer(){

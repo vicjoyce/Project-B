@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_vote.*
+import net.steamcrafted.materialiconlib.MaterialIconView
 
 
 class VoteFragment() : Fragment() {
@@ -37,6 +38,7 @@ class VoteFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mDatabase = FirebaseDatabase.getInstance()
+
 
         return inflater.inflate(R.layout.fragment_vote, container, false)
     }
@@ -78,6 +80,14 @@ class VoteFragment() : Fragment() {
                     }
                 }
             })
+
+        vote_a_cardview.setOnClickListener{
+           add_photo_icon_a.visibility = MaterialIconView.VISIBLE
+        }
+    }
+
+    fun cardClicked (view: View){
+
     }
 
 

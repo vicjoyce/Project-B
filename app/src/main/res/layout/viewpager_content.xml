@@ -48,13 +48,11 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:gravity="center"
-                          android:layout_marginBottom="16dp"
-                          android:layout_marginStart="16dp"
-                          android:layout_marginLeft="16dp"
+                          android:layout_gravity="center"
                           android:id="@+id/viewpager_description_tv"
                           android:text="This page will descripbe the main purpose of our vote app"
                           android:fontFamily="@font/sree_krushnadevaraya"
-                />
+                          android:textAlignment="center"/>
 
 
             </LinearLayout>

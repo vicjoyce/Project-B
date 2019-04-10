@@ -8,8 +8,6 @@
     <string name="fb_login_protocol_scheme">fb1248453291973458</string>
     <string name="submit_subject">Subject</string>
     <string name="pin_timer_ready_button">READY?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="make_decision">MAKE YOUR DECISION</string>
 
 </resources>

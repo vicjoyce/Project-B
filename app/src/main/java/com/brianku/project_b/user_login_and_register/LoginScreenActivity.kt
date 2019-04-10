@@ -188,16 +188,16 @@ class LoginScreenActivity : AppCompatActivity() {
         val images = arrayListOf<Int>(R.drawable.concept_chat2,R.drawable.concept_discuss2,R.drawable.concept_vote2)
 
         listOfTrainPage = mutableListOf(
-            TrainPage("Page 1"
-                ,"This page will describe the main purpose for the Vote app"
+            TrainPage("Question"
+                ,"Can make the desicion or wants getting an answer by group?"
                 ,images[0]
             ),
-            TrainPage("Page 2"
-                ,"This page will describe the how to use the vote"
+            TrainPage("Set Up"
+                ,"Set up your question and options"
                 ,images[1]
             ),
-            TrainPage("Page 3"
-                ,"This page will describe how to chat with other people for the vote subject"
+            TrainPage("Let's Vote"
+                ,"Vote your opinion anonymously"
                 ,images[2]
             )
         )

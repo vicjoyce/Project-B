@@ -30,7 +30,7 @@ class SubmitVoteActivity : AppCompatActivity() {
         submit_number_picker.setWrapSelectorWheel(true)
         submit_number_picker.setOnValueChangedListener { _, _, newVal ->
               if(newVal == 3){
-                  minute = 10
+                  minute = 9
               }else{
                   minute = newVal - 1
               }

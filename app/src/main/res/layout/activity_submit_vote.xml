@@ -272,7 +272,7 @@
                     app:np_fadingEdgeEnabled="true"
                     app:np_scrollerEnabled="true"
 
-                    app:np_max="10"
+                    app:np_max="9"
                     app:np_min="3"
                     app:np_selectedTextColor="@color/white"
                     app:np_selectedTextSize="20sp"

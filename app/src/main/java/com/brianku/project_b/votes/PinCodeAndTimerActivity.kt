@@ -52,7 +52,7 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
             val uid = DashboardActivity.currentUser?.userId
             val reference = mDatabase.getReference("/Votes").push()
             if( uid != null && reference.key != null){
-                val vote = Votes(subject,reference.key!!,uid,System.currentTimeMillis() / 1000,pinCode)
+                val vote = Votes(subject,reference.key!!,uid,System.currentTimeMillis() / 1000,minute,pinCode)
                 val optionsForVote = Options(options[0],options[1],options[2],options[3])
                 reference.setValue(vote).addOnSuccessListener {
                     reference.child("options").setValue(optionsForVote)

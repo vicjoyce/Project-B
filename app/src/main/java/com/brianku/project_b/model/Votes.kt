@@ -11,6 +11,7 @@ data class Votes(val subject:String = "",
                  val voteId:String = "",
                  val ownerId:String = "",
                  val timestamp: Long = System.currentTimeMillis() / 1000,
+                 val minutes:Int = 0,
                  val pinCode:String = "",
                  var options:HashMap<String,String> = hashMapOf<String,String>(),
                  var results:HashMap<String,Int> = hashMapOf<String,Int>()

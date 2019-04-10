@@ -3,10 +3,13 @@ package com.brianku.project_b.app_central
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.brianku.project_b.R
 import com.brianku.project_b.model.User
@@ -25,6 +28,8 @@ class VoteFragment() : Fragment() {
         var mVoteId:String? = null
     }
     private lateinit var mDatabase:FirebaseDatabase
+    private lateinit var timer: CountDownTimer
+
 
 
     override fun onCreateView(
@@ -32,7 +37,6 @@ class VoteFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mDatabase = FirebaseDatabase.getInstance()
-
 
         return inflater.inflate(R.layout.fragment_vote, container, false)
     }
@@ -45,11 +49,10 @@ class VoteFragment() : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         initComponents()
     }
-
 
     private fun initComponents(){
         mDatabase.getReference("/Votes/$mVoteId")
@@ -78,14 +81,47 @@ class VoteFragment() : Fragment() {
     }
 
 
+
     private fun setupVoteInfo(vote:Votes){
         vote_fragment_subject_tv.text = vote.subject
-        vote_fragment_timer_tv.text = vote.timestamp.toString()
         val options = vote.options
         vote_fragment_option_a_tv.text = options["first"]
         vote_fragment_option_b_tv.text = options["second"]
         vote_fragment_option_c_tv.text = options["third"]
         vote_fragment_option_d_tv.text = options["forth"]
+
+        val entryTimeStamp = System.currentTimeMillis() / 1000
+        val minutesForMilllis = (vote.minutes.toLong() * 60 ) + vote.timestamp
+        val elapseTime = minutesForMilllis - entryTimeStamp
+
+        Log.d("vic","when user entry:$entryTimeStamp")
+        Log.d("vic","time in database:${vote.timestamp}")
+        Log.d("vic","expected database + minutes: $minutesForMilllis")
+        Log.d("vic","elapsedTime: $elapseTime")
+
+         timer = object : CountDownTimer(elapseTime* 1000,1000) {
+            override fun onFinish() {
+                Toast.makeText(activity,"Times Up",Toast.LENGTH_LONG).show()
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                val realSeconds = millisUntilFinished / 1000
+                val mins = realSeconds / 60
+                var seconds = (realSeconds % 60).toString()
+                if(seconds.length == 1) {
+                    seconds = "0$seconds"
+                }
+
+                vote_fragment_timer_tv.text = "$mins : $seconds"
+
+            }
+        }
+        timer.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timer.cancel()
     }
 
 }

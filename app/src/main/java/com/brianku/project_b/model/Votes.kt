@@ -14,7 +14,8 @@ data class Votes(val subject:String = "",
                  val minutes:Int = 0,
                  val pinCode:String = "",
                  var options:HashMap<String,String> = hashMapOf<String,String>(),
-                 var results:HashMap<String,Int> = hashMapOf<String,Int>()
+                 var results:HashMap<String,Int> = hashMapOf<String,Int>(),
+                 var participant:HashMap<String,Boolean> = hashMapOf<String,Boolean>()
 
 ) : Serializable {
     @Exclude

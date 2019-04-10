@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.brianku.project_b.R
+import com.brianku.project_b.dashboard.DashboardActivity
 import com.brianku.project_b.model.User
 import com.brianku.project_b.model.Votes
 import com.google.firebase.database.DataSnapshot
@@ -30,16 +31,16 @@ class VoteFragment() : Fragment() {
     }
     private lateinit var mDatabase:FirebaseDatabase
     private lateinit var timer: CountDownTimer
+    private var answer:String = ""
+    private lateinit var mParticipant:HashMap<String,Boolean>
+    private var hasVoted:Boolean = false
 
-
-
+// Fragment lifecycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mDatabase = FirebaseDatabase.getInstance()
-
-
         return inflater.inflate(R.layout.fragment_vote, container, false)
     }
 
@@ -55,6 +56,14 @@ class VoteFragment() : Fragment() {
         super.onStart()
         initComponents()
     }
+
+    override fun onStop() {
+        super.onStop()
+        timer.cancel()
+    }
+
+
+    // init the views
 
     private fun initComponents(){
         mDatabase.getReference("/Votes/$mVoteId")
@@ -82,18 +91,54 @@ class VoteFragment() : Fragment() {
             })
 
         vote_a_cardview.setOnClickListener{
-           add_photo_icon_a.visibility = MaterialIconView.VISIBLE
+            cardClicked(0)
+        }
+        vote_b_cardview.setOnClickListener{
+            cardClicked(1)
+        }
+        vote_c_cardview.setOnClickListener {
+            cardClicked(2)
+        }
+        vote_d_cardview.setOnClickListener {
+            cardClicked(3)
+        }
+
+        vote_fragment_vote_btn.setOnClickListener {
+            submitAnswer()
+        }
+
+    }
+
+    private fun cardClicked (card:Int){
+
+        val icons = listOf<Int>(R.id.add_photo_icon_a,R.id.add_photo_icon_b,R.id.add_photo_icon_c,R.id.add_photo_icon_d)
+        for (icon in icons){
+            val view = activity!!.findViewById<MaterialIconView>(icon)
+            view.visibility = MaterialIconView.INVISIBLE
+        }
+        when(card) {
+            0-> {
+                add_photo_icon_a.visibility = MaterialIconView.VISIBLE
+                answer = "A"
+            }
+            1 -> {
+                add_photo_icon_b.visibility = MaterialIconView.VISIBLE
+                answer = "B"
+            }
+            2 -> {
+                add_photo_icon_c.visibility = MaterialIconView.VISIBLE
+                answer = "C"
+            }
+            3-> {
+                add_photo_icon_d.visibility = MaterialIconView.VISIBLE
+                answer = "D"
+            }
         }
     }
 
-    fun cardClicked (view: View){
-
-    }
-
-
-
     private fun setupVoteInfo(vote:Votes){
         vote_fragment_subject_tv.text = vote.subject
+        mParticipant = vote.participant
         val options = vote.options
         vote_fragment_option_a_tv.text = options["first"]
         vote_fragment_option_b_tv.text = options["second"]
@@ -104,14 +149,13 @@ class VoteFragment() : Fragment() {
         val minutesForMilllis = (vote.minutes.toLong() * 60 ) + vote.timestamp
         val elapseTime = minutesForMilllis - entryTimeStamp
 
-        Log.d("vic","when user entry:$entryTimeStamp")
-        Log.d("vic","time in database:${vote.timestamp}")
-        Log.d("vic","expected database + minutes: $minutesForMilllis")
-        Log.d("vic","elapsedTime: $elapseTime")
 
          timer = object : CountDownTimer(elapseTime* 1000,1000) {
             override fun onFinish() {
-                Toast.makeText(activity,"Times Up",Toast.LENGTH_LONG).show()
+                Toast.makeText(activity,"Time's Up",Toast.LENGTH_LONG).show()
+                vote_fragment_flag_tv.text = "Time's Up"
+                vote_fragment_vote_btn.isEnabled = false
+
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -121,17 +165,46 @@ class VoteFragment() : Fragment() {
                 if(seconds.length == 1) {
                     seconds = "0$seconds"
                 }
-
                 vote_fragment_timer_tv.text = "$mins : $seconds"
-
             }
         }
         timer.start()
     }
 
-    override fun onStop() {
-        super.onStop()
-        timer.cancel()
-    }
+    private fun submitAnswer(){
+        if(answer.isEmpty()) return
+        val userId = DashboardActivity.currentUser?.userId
+        userId?.let{
+            if(mParticipant.containsKey(it)) {
+                hasVoted = true
+            }
+          if(hasVoted){
+              Toast.makeText(activity,"You already Vote...",Toast.LENGTH_LONG).show()
+          }else{
+              val reference = mDatabase.getReference("/Votes/$mVoteId")
+              reference.child("participant").child(it).setValue(true)
+                  .addOnSuccessListener {
+                      Toast.makeText(activity,"Thanks for Your Voting",Toast.LENGTH_LONG).show()
+                      hasVoted = true
+                      val resultRef = reference.child("results").child("ans$answer")
+                      resultRef.addListenerForSingleValueEvent(object :ValueEventListener{
+                          override fun onCancelled(p0: DatabaseError) {}
 
+                          override fun onDataChange(dataSnapshot: DataSnapshot) {
+                              val oldValue = dataSnapshot.getValue(Int::class.java)
+                              oldValue?.let{
+                                  val newValue = oldValue + 1
+                                  resultRef.setValue(newValue).addOnSuccessListener {
+                                      Toast.makeText(activity,"Check the result?",Toast.LENGTH_LONG).show()
+                                  }.addOnFailureListener{
+                                      Log.d("vic","Error Message:${it.message}")
+                                  }
+                              }
+
+                          }
+                      })
+                  }
+             }
+        }
+    }
 }

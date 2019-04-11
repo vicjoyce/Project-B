@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".app_central.ChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Chat here"/>
 
-</FrameLayout>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:id="@+id/view3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+    <EditText
+
+            android:layout_width="292dp"
+            android:layout_height="47dp"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@drawable/selector_bg_edit_2"
+            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+            android:drawableLeft="@drawable/ic_insert_emoticon_black_24dp"
+            android:fontFamily="@font/lato_bold"
+            android:ems="10"
+            android:id="@+id/chat_message_et" android:hint="@string/message_hint"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/view3"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/chat_send_btn"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"/>
+    <Button
+            android:text="@string/send_message_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_shape_5"
+            android:textColor="@color/white"
+            android:id="@+id/chat_send_btn"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/view3" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"/>
+    <android.support.v7.widget.RecyclerView
+
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="616dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/chat_message_et"/>
+
+</android.support.constraint.ConstraintLayout>

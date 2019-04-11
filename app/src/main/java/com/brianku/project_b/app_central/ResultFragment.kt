@@ -11,9 +11,11 @@ import android.view.ViewGroup
 
 import com.brianku.project_b.R
 import com.brianku.project_b.model.Results
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_result.*
 
@@ -22,6 +24,7 @@ class ResultFragment : Fragment() {
 
     private lateinit var mDatabase: FirebaseDatabase
     private var pieSource:List<Int> = listOf(0,0,0,0)
+    private val answersList = listOf("A","B","C","D")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +41,12 @@ class ResultFragment : Fragment() {
                         for ( data in pieSource) Log.d("vic","$data")
                         Log.d("vic","Listener onDataChange is invoked")
                         if(result_result_a_tv != null && result_result_b_tv != null &&
-                                result_result_c_tv != null && result_result_d_tv != null){
+                                result_result_c_tv != null &&
+                                result_result_d_tv != null && result_piechart != null ){
                             setViewToMatchData()
+                            setPie()
                         }
+
                     }
                 }
             })
@@ -52,6 +58,9 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("vic","onCreateView is invoked")
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_result, container, false)
     }
@@ -59,6 +68,7 @@ class ResultFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setViewToMatchData()
+        setPie()
         Log.d("vic","onStart is invoked")
 
     }
@@ -68,5 +78,49 @@ class ResultFragment : Fragment() {
         result_result_b_tv.text = pieSource[1].toString()
         result_result_c_tv.text = pieSource[2].toString()
         result_result_d_tv.text = pieSource[3].toString()
+    }
+
+    private fun setPie(){
+        // pie attributes setting
+        result_piechart.setUsePercentValues(true)
+        result_piechart.description.isEnabled = false
+        result_piechart.setExtraOffsets(5f,10f,5f,5f)
+
+        result_piechart.dragDecelerationFrictionCoef = 0.95f
+        result_piechart.isDrawHoleEnabled = true
+        result_piechart.setHoleColor(Color.WHITE)
+        result_piechart.transparentCircleRadius = 61f
+        result_piechart.setEntryLabelColor(Color.WHITE)
+        result_piechart.setEntryLabelTextSize(15f)
+
+        // set up the entry data
+
+        var yValues: ArrayList<PieEntry> = arrayListOf()
+
+        for(i in 0..pieSource.size - 1 ){
+            yValues.add(PieEntry(pieSource[i].toFloat(),answersList[i]))
+        }
+
+
+        result_piechart.animateY(1000,Easing.EasingOption.EaseInCubic)
+
+
+        // create pie datasets
+        val pieDataset = PieDataSet(yValues,"Subject Name")
+
+        pieDataset.sliceSpace = 3f
+        pieDataset.selectionShift = 5f
+        pieDataset.colors = ColorTemplate.JOYFUL_COLORS.asList()
+
+
+        // setting individual data
+        val data = PieData(pieDataset)
+
+        data.setValueTextSize(20f)
+        data.setValueTextColor(Color.WHITE)
+
+        // assign data to pie
+        result_piechart.data = data
+
     }
 }

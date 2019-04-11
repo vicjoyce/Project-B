@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.brianku.project_b.R
 import com.brianku.project_b.app_central.AppCentralActivity
+import com.brianku.project_b.extension.hideKeyboard
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -56,6 +57,11 @@ class HandlePinCodeActivity : AppCompatActivity() {
                    }
                 }
             })
+
+            handle_pin_0_et.hideKeyboard()
+            handle_pin_1_et.hideKeyboard()
+            handle_pin_2_et.hideKeyboard()
+            handle_pin_3_et.hideKeyboard()
         }
     }
 

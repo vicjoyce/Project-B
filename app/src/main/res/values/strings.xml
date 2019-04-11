@@ -9,5 +9,7 @@
     <string name="submit_subject">Subject</string>
     <string name="pin_timer_ready_button">READY?</string>
     <string name="make_decision">MAKE YOUR DECISION</string>
+    <string name="message_hint">Type a message here</string>
+    <string name="send_message_button">SEND</string>
 
 </resources>

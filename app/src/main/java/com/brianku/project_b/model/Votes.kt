@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 import java.sql.Timestamp
 import java.util.*
+import kotlin.collections.HashMap
 
 @IgnoreExtraProperties
 data class Votes(val subject:String = "",
@@ -15,7 +16,8 @@ data class Votes(val subject:String = "",
                  val pinCode:String = "",
                  var options:HashMap<String,String> = hashMapOf<String,String>(),
                  var results:HashMap<String,Int> = hashMapOf<String,Int>(),
-                 var participant:HashMap<String,Boolean> = hashMapOf<String,Boolean>()
+                 var participant:HashMap<String,Boolean> = hashMapOf<String,Boolean>(),
+                 val messages:HashMap<String,ChatMessage> = hashMapOf()
 
 ) : Serializable {
     @Exclude

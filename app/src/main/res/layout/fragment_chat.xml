@@ -4,6 +4,42 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".app_central.ChatFragment">
+    <android.support.v7.widget.CardView
+            app:cardBackgroundColor="@color/myblue"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="20dp"
+            android:elevation="8dp"
+            android:layout_width="395dp"
+            android:layout_height="101dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp" android:id="@+id/row_to_message_cardview">
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" tools:src="@tools:sample/avatars"
+                    android:id="@+id/chat_owner_imageview" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                    android:fontFamily="@font/lato_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="78dp"
+                    android:id="@+id/chat_subject_tv"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/vote_frament_subject_owner_imageview"
+                    android:textSize="24sp"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
 
     <View
@@ -45,10 +81,10 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:id="@+id/chat_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="616dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="467dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/row_to_message_cardview"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/chat_message_et"/>
 
 </android.support.constraint.ConstraintLayout>

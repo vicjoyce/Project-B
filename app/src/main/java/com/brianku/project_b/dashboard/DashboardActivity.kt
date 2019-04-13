@@ -64,16 +64,8 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupPicture(){
         currentUser?.let{
-            Picasso.get().load(it.image).into(dashboard_BlurImageView,object:Callback{
-                override fun onSuccess() {
-                    dashboard_BlurImageView.setBlur(25)
-                }
 
-                override fun onError(e: Exception?) {
-                }
-            })
-
-            Picasso.get().load(it.thumbImage).into(dashboard_circleView)
+            Picasso.get().load(it.image).into(dashboard_circleView)
             dashboard_username_tv.text = it.displayName
         }
     }

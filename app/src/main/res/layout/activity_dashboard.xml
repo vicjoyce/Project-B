@@ -13,13 +13,12 @@
             android:layout_height="288dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/frameLayout">
-        <com.jgabrielfreitas.core.BlurImageView
+        <ImageView
                 android:id="@+id/dashboard_BlurImageView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="380dp"
                 android:scaleType="fitXY"
-                app:radius="25"
-                android:src="@drawable/kal" />
+                android:src="@drawable/theme_bg_04"/>
         <de.hdodenhof.circleimageview.CircleImageView
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/white"

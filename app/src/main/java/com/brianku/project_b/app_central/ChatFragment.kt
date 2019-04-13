@@ -1,6 +1,7 @@
 package com.brianku.project_b.app_central
 
 
+import android.graphics.Color
 import android.os.Bundle
 
 import android.support.v4.app.Fragment
@@ -80,7 +81,6 @@ class ChatFragment : Fragment() {
         }
         chat_entry_pincode_tv.text = VoteFragment.currentVote?.pinCode ?: ""
     }
-
 
 
     private fun listenFromMessage(){

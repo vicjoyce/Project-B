@@ -104,8 +104,6 @@ class VoteFragment() : Fragment() {
                 }
             })
 
-
-
         fetchCurrentVote()
 
         vote_a_cardview.setOnClickListener{
@@ -206,6 +204,7 @@ class VoteFragment() : Fragment() {
         if(isTimeUp){
             Toast.makeText(activity,"Woop!!, The Vote Activity has been expired",Toast.LENGTH_LONG).show()
         }
+
         if(answer.isEmpty()) return
         val userId = DashboardActivity.currentUser?.userId
         userId?.let{

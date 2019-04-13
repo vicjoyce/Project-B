@@ -191,24 +191,36 @@
                 android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"
                     android:layout_width="60dp"
                     android:layout_height="60dp" tools:src="@tools:sample/avatars"
                     android:id="@+id/vote_frament_subject_owner_imageview" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
                     app:layout_constraintVertical_bias="0.0"/>
-            <TextView
-                    android:fontFamily="@font/lato_bold"
-                    android:layout_width="0dp"
-                    android:layout_height="78dp"
-                    android:id="@+id/vote_fragment_subject_tv"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/vote_frament_subject_owner_imageview"
-                    android:textSize="24sp"/>
+            <ScrollView android:layout_width="0dp" android:layout_height="57dp"
+                        app:layout_constraintStart_toEndOf="@+id/vote_frament_subject_owner_imageview"
+                        android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0">
+
+                <TextView
+                        android:fontFamily="@font/lato_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/vote_fragment_subject_tv"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:paddingBottom="10dp"
+                        app:layout_constraintStart_toEndOf="@+id/vote_frament_subject_owner_imageview"
+                        android:textSize="18sp" android:text="Question"/>
+            </ScrollView>
+
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
     <Button

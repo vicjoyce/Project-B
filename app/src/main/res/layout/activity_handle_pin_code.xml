@@ -32,11 +32,10 @@
                 android:layout_height="match_parent">
             <EditText
                     android:inputType="textCapCharacters"
-
+                    android:nextFocusDown="@+id/handle_pin_next_btn"
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/golden"
                     android:textSize="52sp"
-
                     android:maxLength="1"
                     android:gravity="center"
                     android:text=""
@@ -66,6 +65,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/golden"
                     android:textSize="52sp"
+                    android:nextFocusDown="@+id/handle_pin_3_et"
 
                     android:maxLength="1"
                     android:gravity="center"
@@ -92,11 +92,11 @@
                 android:layout_height="match_parent">
             <EditText
                     android:inputType="textCapCharacters"
+                    android:nextFocusDown="@+id/handle_pin_2_et"
 
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/golden"
                     android:textSize="52sp"
-
                     android:maxLength="1"
                     android:gravity="center"
                     android:text=""
@@ -123,6 +123,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/golden"
                     android:textSize="52sp"
+                    android:nextFocusDown="@+id/handle_pin_1_et"
 
                     android:maxLength="1"
                     android:gravity="center"

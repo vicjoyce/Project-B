@@ -36,6 +36,7 @@ class VoteFragment() : Fragment() {
     private var answer:String = ""
     private lateinit var mParticipant:HashMap<String,Boolean>
     private var hasVoted:Boolean = false
+    private var isTimeUp:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -184,7 +185,7 @@ class VoteFragment() : Fragment() {
             override fun onFinish() {
                 Toast.makeText(activity,"Time's Up",Toast.LENGTH_LONG).show()
                 vote_fragment_flag_tv.text = "Time's Up"
-                vote_fragment_vote_btn.isEnabled = false
+                isTimeUp = true
 
             }
 
@@ -202,6 +203,9 @@ class VoteFragment() : Fragment() {
     }
 
     private fun submitAnswer(){
+        if(isTimeUp){
+            Toast.makeText(activity,"Woop!!, The Vote Activity has been expired",Toast.LENGTH_LONG).show()
+        }
         if(answer.isEmpty()) return
         val userId = DashboardActivity.currentUser?.userId
         userId?.let{

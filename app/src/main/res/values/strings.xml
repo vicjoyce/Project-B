@@ -6,7 +6,7 @@
     <string name="login_login_button">Login</string>
     <string name="facebook_app_id">1248453291973458</string>
     <string name="fb_login_protocol_scheme">fb1248453291973458</string>
-    <string name="submit_subject">Subject</string>
+    <string name="submit_subject">QUESTION:</string>
     <string name="pin_timer_ready_button">READY?</string>
     <string name="make_decision">MAKE YOUR DECISION</string>
     <string name="message_hint">Type a message here</string>

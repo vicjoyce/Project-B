@@ -3,6 +3,8 @@ package com.brianku.project_b.votes
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import com.brianku.project_b.R
 import com.brianku.project_b.app_central.AppCentralActivity
@@ -64,6 +66,7 @@ class HandlePinCodeActivity : AppCompatActivity() {
             handle_pin_3_et.hideKeyboard()
         }
     }
+
 
     private fun navigateToAppCentral(voteId:String){
         val intent = Intent(this,AppCentralActivity::class.java)

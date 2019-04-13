@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_vote.*
 import net.steamcrafted.materialiconlib.MaterialIconView
 
@@ -28,6 +29,7 @@ class VoteFragment() : Fragment() {
 
     companion object {
         var mVoteId:String? = null
+        var currentVote:Votes? = null
     }
     private lateinit var mDatabase:FirebaseDatabase
     private  var timer : CountDownTimer? = null
@@ -54,6 +56,7 @@ class VoteFragment() : Fragment() {
         val voteId = arguments?.getString("VoteId")
         voteId?.let{
             mVoteId = it
+
         }
     }
 
@@ -100,6 +103,10 @@ class VoteFragment() : Fragment() {
                 }
             })
 
+
+
+        fetchCurrentVote()
+
         vote_a_cardview.setOnClickListener{
             cardClicked(0)
         }
@@ -116,6 +123,20 @@ class VoteFragment() : Fragment() {
             submitAnswer()
         }
 
+    }
+
+
+    private fun fetchCurrentVote(){
+        if (mVoteId == null) return
+        mDatabase.getReference("Votes/${VoteFragment.mVoteId}").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                currentVote = dataSnapshot.getValue(Votes::class.java) as Votes
+
+            }
+
+        })
     }
 
     private fun cardClicked (card:Int){

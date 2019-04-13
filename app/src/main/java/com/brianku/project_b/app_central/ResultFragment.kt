@@ -25,6 +25,7 @@ class ResultFragment : Fragment() {
     private lateinit var mDatabase: FirebaseDatabase
     private var pieSource:List<Int> = listOf(0,0,0,0)
     private val answersList = listOf("A","B","C","D")
+    private var subject: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class ResultFragment : Fragment() {
                     val results = dataSnapshot.getValue(Results::class.java)
                     results?.let{
                         pieSource = listOf<Int>(it.ansA,it.ansB,it.ansC,it.ansD)
+                        subject = VoteFragment.currentVote?.subject ?: ""
                         for ( data in pieSource) Log.d("vic","$data")
                         if(result_result_a_tv != null && result_result_b_tv != null &&
                                 result_result_c_tv != null &&
@@ -103,7 +105,7 @@ class ResultFragment : Fragment() {
 
 
         // create pie datasets
-        val pieDataset = PieDataSet(yValues,"Subject Name")
+        val pieDataset = PieDataSet(yValues,subject)
 
         pieDataset.sliceSpace = 3f
         pieDataset.selectionShift = 5f

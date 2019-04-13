@@ -20,7 +20,9 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".app_central.AppCentralActivity"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"
+                 >
+        >
         </activity>
         <activity
                 android:name=".votes.PinCodeAndTimerActivity"

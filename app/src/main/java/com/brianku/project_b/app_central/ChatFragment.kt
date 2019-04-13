@@ -55,6 +55,14 @@ class ChatFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.chat_recyclerview) as RecyclerView
         listenFromMessage()
+        groupAdapter.registerAdapterDataObserver(
+            object :RecyclerView.AdapterDataObserver(){
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+                    recyclerView.layoutManager!!.smoothScrollToPosition(recyclerView,null,groupAdapter.getItemCount())
+                }
+            }
+        )
         recyclerView.adapter = groupAdapter
 
         return view
@@ -70,20 +78,10 @@ class ChatFragment : Fragment() {
         user?.let{
             Picasso.get().load(it.thumbImage).into(chat_owner_imageview)
         }
-        fetchPinCode()
+        chat_entry_pincode_tv.text = VoteFragment.currentVote?.pinCode ?: ""
     }
 
-    private fun fetchPinCode(){
-        mDatabase.getReference("Votes/${VoteFragment.mVoteId}").addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-               val vote = dataSnapshot.getValue(Votes::class.java) as Votes
-                chat_entry_pincode_tv.text = "Entry PinCode: ${vote.pinCode}"
-            }
-
-        })
-    }
 
     private fun listenFromMessage(){
         val reference = mDatabase.getReference("/Votes/${VoteFragment.mVoteId}").child("messages")
@@ -120,8 +118,6 @@ class ChatFragment : Fragment() {
         val user = DashboardActivity.currentUser
         if (user == null) return
         val chatMessage = ChatMessage(reference.key!!,user.userId,text,user.displayName,user.thumbImage)
-        reference.setValue(chatMessage).addOnSuccessListener {
-            chat_recyclerview.smoothScrollToPosition(itemSize - 1)
-        }
+        reference.setValue(chatMessage)
     }
 }

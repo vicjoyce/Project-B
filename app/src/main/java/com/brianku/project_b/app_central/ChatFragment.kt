@@ -18,15 +18,14 @@ import android.widget.Toast
 import com.brianku.project_b.R
 import com.brianku.project_b.dashboard.DashboardActivity
 import com.brianku.project_b.extension.getTimeString
-import com.brianku.project_b.model.ChatFromItem
-import com.brianku.project_b.model.ChatMessage
-import com.brianku.project_b.model.ChatToItem
-import com.brianku.project_b.model.User
+import com.brianku.project_b.extension.hideKeyboard
+import com.brianku.project_b.model.*
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 import kotlinx.android.synthetic.main.fragment_chat.*
@@ -37,6 +36,7 @@ class ChatFragment : Fragment() {
 
     private lateinit var mDatabase:FirebaseDatabase
     private lateinit var groupAdapter:GroupAdapter<ViewHolder>
+    private var itemSize = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +52,7 @@ class ChatFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.chat_recyclerview) as RecyclerView
         listenFromMessage()
         recyclerView.adapter = groupAdapter
@@ -64,6 +65,24 @@ class ChatFragment : Fragment() {
         chat_send_btn.setOnClickListener {
             sendMessageAndPost()
         }
+
+        val user = DashboardActivity.currentUser
+        user?.let{
+            Picasso.get().load(it.thumbImage).into(chat_owner_imageview)
+        }
+        fetchPinCode()
+    }
+
+    private fun fetchPinCode(){
+        mDatabase.getReference("Votes/${VoteFragment.mVoteId}").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+               val vote = dataSnapshot.getValue(Votes::class.java) as Votes
+                chat_entry_pincode_tv.text = "Entry PinCode: ${vote.pinCode}"
+            }
+
+        })
     }
 
     private fun listenFromMessage(){
@@ -78,6 +97,7 @@ class ChatFragment : Fragment() {
                 }else {
                     groupAdapter.add(ChatFromItem(chatMessage.text,chatMessage.displayName,chatMessage.thumbImage,chatMessage.timestamp))
                 }
+                itemSize = dataSnapshot.childrenCount.toInt()
             }
 
             override fun onCancelled(p0: DatabaseError) {}
@@ -92,13 +112,16 @@ class ChatFragment : Fragment() {
         val text = chat_message_et.text.toString().trim()
         if(text.isEmpty()) return
 
+        chat_message_et.setText("")
+        chat_message_et.hideKeyboard()
+
 
         val reference = mDatabase.getReference("/Votes/${VoteFragment.mVoteId}").child("messages").push()
         val user = DashboardActivity.currentUser
         if (user == null) return
         val chatMessage = ChatMessage(reference.key!!,user.userId,text,user.displayName,user.thumbImage)
         reference.setValue(chatMessage).addOnSuccessListener {
-            Log.d("vic","${chatMessage.toString()}")
+            chat_recyclerview.smoothScrollToPosition(itemSize - 1)
         }
     }
 }

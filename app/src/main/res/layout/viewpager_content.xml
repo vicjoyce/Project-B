@@ -22,7 +22,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/dummy_1"
                     android:id="@+id/viewpager_image_imageview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

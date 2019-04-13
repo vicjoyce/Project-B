@@ -7,6 +7,7 @@ import com.brianku.project_b.R
 import com.brianku.project_b.app_central.AppCentralActivity
 import com.brianku.project_b.model.DashboardItem
 import com.brianku.project_b.model.User
+import com.brianku.project_b.model.UserItem
 import com.brianku.project_b.user_login_and_register.LoginScreenActivity
 import com.brianku.project_b.votes.CreateVoteActivity
 import com.brianku.project_b.votes.HandlePinCodeActivity
@@ -47,20 +48,16 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-
     private fun fetchCurrentUser(){
         val uid = mAuth.uid
         var ref = FirebaseDatabase.getInstance().getReference("Users/$uid")
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
+            override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                currentUser = dataSnapshot.getValue(User::class.java)
                 setupPicture()
             }
-
         })
     }
 
@@ -142,20 +139,6 @@ class DashboardActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
 }
 
 
-class UserItem(val item:DashboardItem): Item<ViewHolder>() {
-
-    override fun getLayout(): Int {
-        return R.layout.dashboard_row_item
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.dashboard_row_item_textview.text = item.text
-        viewHolder.itemView.dashboard_row_item_imageview.setImageResource(item.imageId)
-    }
-
-
-}

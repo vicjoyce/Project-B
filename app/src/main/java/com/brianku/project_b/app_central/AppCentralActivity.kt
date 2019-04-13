@@ -15,17 +15,14 @@ class AppCentralActivity : AppCompatActivity() {
     private val mOnNavigationItemListIntent = BottomNavigationView.OnNavigationItemSelectedListener{
         when(it.itemId){
             R.id.vote ->{
-                Toast.makeText(this@AppCentralActivity,"vote is clicked",Toast.LENGTH_LONG).show()
                 replaceFragment(VoteFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.chat ->{
-                Toast.makeText(this@AppCentralActivity,"chat is clicked",Toast.LENGTH_LONG).show()
                 replaceFragment(ChatFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.result->{
-                Toast.makeText(this@AppCentralActivity,"result is clicked",Toast.LENGTH_LONG).show()
                 replaceFragment(ResultFragment())
                 return@OnNavigationItemSelectedListener true
             }
@@ -53,7 +50,6 @@ class AppCentralActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer,fragment)
         fragmentTransaction.commit()
-
     }
 
     override fun onBackPressed() {

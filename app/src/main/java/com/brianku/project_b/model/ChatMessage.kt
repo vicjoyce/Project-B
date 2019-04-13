@@ -9,6 +9,8 @@ import java.sql.Timestamp
 data class ChatMessage(val messageId:String = "",
                        val userId:String = "",
                        val text:String = "default",
+                       val displayName: String = "",
+                       val thumbImage: String = "",
                        var timestamp: Long = System.currentTimeMillis() / 1000
 ) : Serializable {
 

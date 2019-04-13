@@ -18,7 +18,9 @@ import android.widget.Toast
 import com.brianku.project_b.R
 import com.brianku.project_b.dashboard.DashboardActivity
 import com.brianku.project_b.extension.getTimeString
+import com.brianku.project_b.model.ChatFromItem
 import com.brianku.project_b.model.ChatMessage
+import com.brianku.project_b.model.ChatToItem
 import com.brianku.project_b.model.User
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -59,11 +61,9 @@ class ChatFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
         chat_send_btn.setOnClickListener {
             sendMessageAndPost()
         }
-
     }
 
     private fun listenFromMessage(){
@@ -72,20 +72,12 @@ class ChatFragment : Fragment() {
 
             override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                 val chatMessage = dataSnapshot.getValue(ChatMessage ::class.java) as ChatMessage
-                mDatabase.getReference("/Users/${chatMessage.userId}")
-                    .addListenerForSingleValueEvent(object :ValueEventListener{
-                        override fun onCancelled(p0: DatabaseError) {}
-
-                        override fun onDataChange(dataSnapshot : DataSnapshot) {
-                            val user = dataSnapshot.getValue(User::class.java) as User
-                            if(user.userId == DashboardActivity.currentUser!!.userId){
-                                groupAdapter.add(ChatToItem(chatMessage.text,user.displayName,chatMessage.timestamp))
-                            }else{
-                                groupAdapter.add(ChatFromItem(chatMessage.text,user.displayName,user.thumbImage,chatMessage.timestamp))
-                            }
-                        }
-
-                    })
+                if(DashboardActivity.currentUser == null) return
+                if(chatMessage.userId == DashboardActivity.currentUser!!.userId) {
+                    groupAdapter.add(ChatToItem(chatMessage.text,chatMessage.displayName,chatMessage.timestamp))
+                }else {
+                    groupAdapter.add(ChatFromItem(chatMessage.text,chatMessage.displayName,chatMessage.thumbImage,chatMessage.timestamp))
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {}
@@ -102,44 +94,11 @@ class ChatFragment : Fragment() {
 
 
         val reference = mDatabase.getReference("/Votes/${VoteFragment.mVoteId}").child("messages").push()
-        val chatMessage = ChatMessage(reference.key!!,DashboardActivity.currentUser!!.userId,text)
+        val user = DashboardActivity.currentUser
+        if (user == null) return
+        val chatMessage = ChatMessage(reference.key!!,user.userId,text,user.displayName,user.thumbImage)
         reference.setValue(chatMessage).addOnSuccessListener {
             Log.d("vic","${chatMessage.toString()}")
         }
     }
-}
-
-
-class ChatFromItem(val text:String,val displayName:String, val userImageUrl:String,val timeStamp: Long): Item<ViewHolder>(){
-    override fun getLayout(): Int {
-        return R.layout.chat_from_row
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.row_from_message_tv.text = text
-        Picasso.get().load(userImageUrl).into(viewHolder.itemView.row_circleImageView)
-        val milisecond = timeStamp * 1000
-
-        val timeString = getTimeString(milisecond)
-        viewHolder.itemView.row__from_username_time_tv.text = "$displayName, $timeString"
-
-
-    }
-
-}
-
-
-
-class ChatToItem(val text: String,val displayName:String,val timeStamp:Long):Item<ViewHolder>(){
-    override fun getLayout(): Int {
-        return R.layout.chat_to_row
-    }
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.row_to_message_tv.text = text
-        val milisecond = timeStamp * 1000
-        val timeString = getTimeString(milisecond)
-        viewHolder.itemView.row_to_username_time_tv.text = "$displayName, $timeString"
-    }
-
 }

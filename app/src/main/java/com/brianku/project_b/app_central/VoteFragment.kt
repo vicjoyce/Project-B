@@ -35,6 +35,11 @@ class VoteFragment() : Fragment() {
     private lateinit var mParticipant:HashMap<String,Boolean>
     private var hasVoted:Boolean = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
 // Fragment lifecycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,7 +112,6 @@ class VoteFragment() : Fragment() {
         vote_d_cardview.setOnClickListener {
             cardClicked(3)
         }
-
         vote_fragment_vote_btn.setOnClickListener {
             submitAnswer()
         }

@@ -39,7 +39,6 @@ class ResultFragment : Fragment() {
                     results?.let{
                         pieSource = listOf<Int>(it.ansA,it.ansB,it.ansC,it.ansD)
                         for ( data in pieSource) Log.d("vic","$data")
-                        Log.d("vic","Listener onDataChange is invoked")
                         if(result_result_a_tv != null && result_result_b_tv != null &&
                                 result_result_c_tv != null &&
                                 result_result_d_tv != null && result_piechart != null ){
@@ -50,14 +49,13 @@ class ResultFragment : Fragment() {
                     }
                 }
             })
-        Log.d("vic","onCreate is invoked")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("vic","onCreateView is invoked")
+
 
 
 
@@ -69,7 +67,6 @@ class ResultFragment : Fragment() {
         super.onStart()
         setViewToMatchData()
         setPie()
-        Log.d("vic","onStart is invoked")
 
     }
 

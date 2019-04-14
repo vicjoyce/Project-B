@@ -18,10 +18,18 @@ class CreateOptionsActivity : AppCompatActivity() {
 
         create_create_option_description_btn.setOnClickListener {
 
-            val optionA = create_options_option_a_ev.text.toString().trim()
-            val optionB = create_options_option_b_ev.text.toString().trim()
-            val optionC = create_options_option_c_ev.text.toString().trim()
-            val optionD = create_options_option_d_ev.text.toString().trim()
+            var optionA = create_options_option_a_ev.text.toString().trim()
+            var optionB = create_options_option_b_ev.text.toString().trim()
+            var optionC = create_options_option_c_ev.text.toString().trim()
+            var optionD = create_options_option_d_ev.text.toString().trim()
+
+            if(optionA == "") optionA = "A"
+            if(optionB == "") optionB = "B"
+            if(optionC == "") optionC = "C"
+            if(optionD == "") optionD = "D"
+
+
+
             create_options_option_a_ev.hideKeyboard()
             create_options_option_b_ev.hideKeyboard()
             create_options_option_c_ev.hideKeyboard()

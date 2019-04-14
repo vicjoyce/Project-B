@@ -189,7 +189,7 @@ class LoginScreenActivity : AppCompatActivity() {
 
         listOfTrainPage = mutableListOf(
             TrainPage("Question"
-                ,"Can make the desicion or wants getting an answer by group?"
+                ,"Can't make the decision or wants getting an answer from group?"
                 ,images[0]
             ),
             TrainPage("Set Up"

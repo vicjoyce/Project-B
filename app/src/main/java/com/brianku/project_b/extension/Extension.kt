@@ -26,3 +26,11 @@ fun getTimeString(milisecond:Long):String{
         return formatter.format(calendar.time)
     }
 }
+
+fun truncateWords(sentence:String,amount:Int,tail:String):String{
+    val words = sentence.split(" ")
+    if(amount >= words.size) return sentence
+
+    val truncated = words.slice(0..amount)
+    return "${truncated.joinToString(" ")}$tail"
+}

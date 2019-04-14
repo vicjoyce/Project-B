@@ -11,5 +11,6 @@
     <string name="make_decision">MAKE YOUR DECISION</string>
     <string name="message_hint">Type a message here</string>
     <string name="send_message_button">SEND</string>
+    <string name="history_title">HISTORY</string>
 
 </resources>

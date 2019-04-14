@@ -119,6 +119,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun goToHistory(){
+        if(currentUser == null) return
         val intent = Intent(this,HistoryMainActivity::class.java)
         intent.putExtra("CurrentUser", currentUser)
         startActivity(intent)

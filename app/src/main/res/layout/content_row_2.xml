@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView android:layout_width="match_parent"
+                                        app:cardUseCompatPadding="true"
+                                        app:cardElevation="2dp"
+                                        app:cardCornerRadius="10dp"
+                                        android:elevation="8dp"
+                                        android:clipChildren="false"
+                                        app:cardBackgroundColor="#ff8791"
+                                        android:clipToPadding="false"
+                                        android:layout_height="100dp"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0">
+        <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                     android:layout_height="match_parent">
+            <LinearLayout android:layout_width="match_parent"
+                          android:orientation="horizontal"
+                          android:id="@+id/content_row_2_linear_layout"
+                          app:layout_constraintTop_toTopOf="parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          android:layout_height="wrap_content" android:layout_marginStart="8dp"
+                          android:layout_marginTop="8dp">
+
+                <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="Option A:"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_row_2_option_a_tv"/>
+                <TextView
+                        android:layout_weight="1"
+
+                        android:text="Option B:"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+
+                        android:id="@+id/content_row_2_option_b_tv"
+                />
+
+            </LinearLayout>
+
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          app:layout_constraintTop_toBottomOf="@id/content_row_2_linear_layout"
+                          android:layout_marginTop="8dp"
+                          android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintEnd_toEndOf="parent"
+                          android:layout_marginStart="8dp" android:id="@+id/linearLayout4">
+
+
+                <TextView
+
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="Option C:"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_row_2_option_c_tv"/>
+                <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:text="Option D:"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/lato_bold"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_row_2_option_d_tv"/>
+
+            </LinearLayout>
+            <TextView
+                    android:text="pincode:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:id="@+id/content_row_2_pincode_tv" android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

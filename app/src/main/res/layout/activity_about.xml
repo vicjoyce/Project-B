@@ -47,7 +47,7 @@
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:fontFamily="@font/sree_krushnadevaraya"
-                    android:text="There's a total of 3 different use cases (click the links to jump to their section). If you want to spice up your Toolbar with icons from thi"
+                    android:text="Coding Adventurer is a startup company which devotes chasing new techs on the web and mobile app and appreciates any fancy design and stunning animation effects "
 
             />
             <Button android:layout_width="wrap_content"

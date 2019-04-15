@@ -50,6 +50,7 @@ class PinCodeAndTimerActivity : AppCompatActivity() {
         pin_timter_timer_tv.text = "$minute:00"
 
         pin_time_ready_btn.setOnClickListener {
+            it.isEnabled = false
             val uid = DashboardActivity.currentUser?.userId
             val reference = mDatabase.getReference("/Votes").push()
             if( uid != null && reference.key != null){

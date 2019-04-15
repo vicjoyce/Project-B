@@ -3,6 +3,9 @@ package com.brianku.project_b.dashboard
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.View
 import bolts.Bolts
@@ -27,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_history_main.*
 import kotlinx.android.synthetic.main.content_row_1.view.*
@@ -43,6 +47,7 @@ class HistoryMainActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: FirebaseDatabase
     private lateinit var groupAdapter:GroupAdapter<ViewHolder>
+    private var dataPositions:MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,36 @@ class HistoryMainActivity : AppCompatActivity() {
 
         fetchHistory()
         history_recyclerview.adapter = groupAdapter
+
+        setupItemTouchHelper()
+    }
+
+    private fun setupItemTouchHelper(){
+        history_recyclerview.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+
+        val itemTouchHelperCallback =
+            object : ItemTouchHelper
+            .SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+                override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean { return false }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+                    val item = groupAdapter.getItem(viewHolder.adapterPosition)
+                    val voteId = dataPositions.removeAt(viewHolder.adapterPosition)
+                    Section().remove(item)
+                    mDatabase.getReference("/Users/${DashboardActivity.currentUser!!.userId}/history/$voteId")
+                        .removeValue()
+                        .addOnSuccessListener {
+                            mDatabase.getReference("/Votes/$voteId").removeValue()
+                        }
+                    groupAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+                }
+
+            }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(history_recyclerview)
+
+
 
 
     }
@@ -86,6 +121,7 @@ class HistoryMainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val vote = dataSnapshot.getValue(Votes::class.java) as Votes
                 groupAdapter.add(VotesItem(vote))
+                dataPositions.add(vote.voteId)
             }
         })
     }

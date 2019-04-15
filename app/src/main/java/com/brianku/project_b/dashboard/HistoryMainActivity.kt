@@ -50,23 +50,22 @@ class HistoryMainActivity : AppCompatActivity() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
                     val item = groupAdapter.getItem(viewHolder.adapterPosition)
                     val voteId = dataPositions.removeAt(viewHolder.adapterPosition)
-                    Section().remove(item)
+
                     mDatabase.getReference("/Users/${DashboardActivity.currentUser!!.userId}/history/$voteId")
                         .removeValue()
                         .addOnSuccessListener {
                             mDatabase.getReference("/Votes/$voteId").removeValue()
-                        }
-                    groupAdapter.notifyItemRemoved(viewHolder.adapterPosition)
-                }
+                        }.addOnCompleteListener {
+                            if(it.isSuccessful)  {
+                                groupAdapter.removeGroup(viewHolder.adapterPosition)
 
+                            }
+                        }
+                }
             }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(history_recyclerview)
-
-
-
-
     }
 
     private fun fetchHistory(){
@@ -85,7 +84,6 @@ class HistoryMainActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             })
     }
 

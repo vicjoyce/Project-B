@@ -56,11 +56,21 @@ class HistoryMainActivity : AppCompatActivity() {
                     val voteId = dataPositions.removeAt(viewHolder.adapterPosition)
                     mDatabase.getReference("/Users/${DashboardActivity.currentUser!!.userId}/history/$voteId")
                         .removeValue()
-                        .addOnSuccessListener {
-                            mDatabase.getReference("/Votes/$voteId").removeValue()
-                        }.addOnCompleteListener {
-                            if(it.isSuccessful)  {
-                                groupAdapter.removeGroup(viewHolder.adapterPosition)
+                        .addOnCompleteListener {
+                            if(it.isSuccessful){
+                                mDatabase.getReference("/Votes/$voteId").addListenerForSingleValueEvent(object :ValueEventListener{
+                                    override fun onCancelled(p0: DatabaseError) {}
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        val vote = dataSnapshot.getValue(Votes::class.java) as Votes
+                                        val pinCode = vote.pinCode
+                                        mDatabase.getReference("/PinCodes/$pinCode").removeValue().addOnCompleteListener {
+                                            if(it.isSuccessful)  mDatabase.getReference("/Votes/$voteId").removeValue()
+                                                .addOnCompleteListener{
+                                                    if(it.isSuccessful) groupAdapter.removeGroup(viewHolder.adapterPosition)
+                                                }
+                                        }
+                                    }
+                                })
                             }
                         }
                 }

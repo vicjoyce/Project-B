@@ -2,8 +2,12 @@ package com.brianku.project_b.dashboard
 
 
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -24,13 +28,15 @@ class HistoryMainActivity : AppCompatActivity() {
     private lateinit var mDatabase: FirebaseDatabase
     private lateinit var groupAdapter:GroupAdapter<ViewHolder>
     private var dataPositions:MutableList<String> = mutableListOf()
+    private lateinit var deleteIcon:Drawable
+    private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#FF0000"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_main)
 
         mDatabase = FirebaseDatabase.getInstance()
-
+        deleteIcon = ContextCompat.getDrawable(this,R.drawable.ic_delete_forever_black_24dp)!!
         groupAdapter = GroupAdapter<ViewHolder>()
 
         fetchHistory()
@@ -68,6 +74,23 @@ class HistoryMainActivity : AppCompatActivity() {
                     actionState: Int,
                     isCurrentlyActive: Boolean
                 ) {
+
+                    val itemView = viewHolder.itemView
+                    val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) /2
+
+                    if( dX > 0){
+                        swipeBackground.setBounds(itemView.left ,itemView.top,dX.toInt() + 24,itemView.bottom)
+                        deleteIcon.setBounds(itemView.left - 64  + iconMargin,itemView.top + iconMargin,itemView.left + iconMargin + deleteIcon.intrinsicWidth - 64, itemView.bottom - iconMargin)
+
+                    }else{
+                        swipeBackground.setBounds(itemView.right + dX.toInt(),itemView.top,itemView.right,itemView.bottom)
+                        deleteIcon.setBounds(itemView.right - iconMargin - deleteIcon.intrinsicWidth + 64, itemView.top + iconMargin,itemView.right - iconMargin + 64,itemView.bottom - iconMargin )
+                    }
+
+
+                    swipeBackground.draw(c)
+                    deleteIcon.draw(c)
+
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 }
             }
